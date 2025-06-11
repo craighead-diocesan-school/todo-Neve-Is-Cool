@@ -1,6 +1,6 @@
 <script>
-  import Header from '$lib/Header.svelte'
-  import BulmaExamples from '$lib/BulmaExamples.svelte'
+  import Header from "$lib/Header.svelte"
+  import BulmaExamples from "$lib/BulmaExamples.svelte"
 </script>
 
 <Header />
