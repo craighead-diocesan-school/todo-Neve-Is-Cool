@@ -1,21 +1,29 @@
 <script>
   import Header from "$lib/Header.svelte"
-  import BulmaExamples from "$lib/BulmaExamples.svelte"
+  let tasks = []
+
+  function addTask() {
+    tasks = [...tasks, ""]
+  }
 </script>
 
 <Header />
 
 <main class="content section">
-  <h2>SvelteKit</h2>
-
-  <p>Welcome to coding with SvelteKit, a modern JavaScript framework that makes it easy to code great apps.</p>
-
-  <p>This template comes loaded with the <a href="https://bulma.io/documentation/">Bulma CSS framework</a>, so you can save time and focus on your project.</p>
-
-  <p>Here's some examples of colour helpers. You can change the colours in <code>theme.scss</code></p>
-  <BulmaExamples />
+  <button on:click={addTask}>📝 Add</button>
+  {#each tasks as task, index}
+    <div class="task">
+      <input bind:value={tasks[index]} />
+    </div>
+  {/each}
 </main>
 
 <footer class="footer">
   <p class="has-text-centered">&copy; Craighead Diocesan School 2025</p>
 </footer>
+
+<style>
+  .task {
+    display: block;
+  }
+</style>
