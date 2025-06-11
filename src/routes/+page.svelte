@@ -5,6 +5,9 @@
   function addTask() {
     tasks = [...tasks, ""]
   }
+  function removeTask(index) {
+    tasks = [...tasks.slice(0, index), ...tasks.slice(index + 1)]
+  }
 </script>
 
 <Header />
@@ -16,6 +19,11 @@
       <input bind:value={tasks[index]} />
     </div>
   {/each}
+  <button
+    on:click={() => {
+      removeTask(index)
+    }}>🗑</button
+  >
 </main>
 
 <footer class="footer">
