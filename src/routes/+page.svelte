@@ -16,14 +16,8 @@
   function loadTasks() {
     tasks = JSON.parse(localStorage.todos)
   }
+  let showLabel = false
   let answer = "yes"
-  function askLoadTasks() {
-    if (answer === "yes") {
-      loadTasks()
-    } else {
-      console.log("Tasks not loaded")
-    }
-  }
 </script>
 
 <Header />
@@ -31,9 +25,23 @@
 <main class="content section">
   <button on:click={addTask}>📝 Add</button>
   <button on:click={saveTasks}>💾 Save</button>
-  <button on:click={askLoadTasks}>📡 Load</button>
+  <button on:click={() => (showLabel = true)}>📡 Load</button>
 
-  <!--On click, another function that asks yes or no and then we have like if yes to the function then we do load tasks function. If button pressed then bind show up to decide. Have load button always there but then bind only shows up. Do reverse of before.-->
+  {#if showLabel}
+    <label>
+      Load Tasks?
+      <select bind:value={answer}>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <button
+        on:click={() => {
+          loadTasks()
+          showLabel = false
+        }}>Confirm</button
+      >
+    </label>
+  {/if}
 
   {#each tasks as task, index}
     <div class="task">
