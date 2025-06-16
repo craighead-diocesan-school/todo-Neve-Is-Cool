@@ -29,29 +29,32 @@
 <Header />
 
 <main class="content section">
-  <button class="button" on:click={addTask}>📝 Add</button>
-  <button class="button" on:click={saveTasks}>💾 Save</button>
-  <button class="button" on:click={() => (showLabel = true)}>📡 Load</button>
-
-  {#if showLabel}
-    <label>
-      Load Tasks?
-      <select bind:value={answer}>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-      </select>
-      {#if answer === "yes"}
-        <button
-          on:click={() => {
-            loadTasks()
-            showLabel = false
-          }}>Confirm</button
-        >
-      {:else}
-        <p>Tasks not loaded</p>
-      {/if}
-    </label>
-  {/if}
+  <section class="buttons">
+    <button class="button" on:click={addTask}>📝 Add</button>
+    <button class="button" on:click={saveTasks}>💾 Save</button>
+    <button class="button" on:click={() => (showLabel = true)}>📡 Load</button>
+  </section>
+  <section class="label">
+    {#if showLabel}
+      <label>
+        Load Tasks?
+        <select bind:value={answer}>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        {#if answer === "yes"}
+          <button
+            on:click={() => {
+              loadTasks()
+              showLabel = false
+            }}>Confirm</button
+          >
+        {:else}
+          <p>Tasks not loaded</p>
+        {/if}
+      </label>
+    {/if}
+  </section>
 
   {#each tasks as task, index}
     <div class="task">
@@ -77,5 +80,16 @@
 
   input {
     padding: 0.5rem;
+  }
+
+  .button {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
   }
 </style>
