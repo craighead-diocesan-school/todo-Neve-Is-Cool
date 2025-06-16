@@ -2,10 +2,14 @@
   import Header from "$lib/Header.svelte"
   let tasks = []
 
+  // Check if localStorage has tasks, if not initialize it
   function addTask() {
     tasks = [...tasks, ""]
     saveTasks()
   }
+
+  // Remove a task by index
+  // and save the updated tasks to localStorage
   function removeTask(index) {
     tasks = [...tasks.slice(0, index), ...tasks.slice(index + 1)]
     saveTasks()
@@ -13,6 +17,8 @@
   function saveTasks() {
     localStorage.todos = JSON.stringify(tasks)
   }
+
+  // Load tasks from localStorage if available
   function loadTasks() {
     tasks = JSON.parse(localStorage.todos)
   }
@@ -23,9 +29,9 @@
 <Header />
 
 <main class="content section">
-  <button on:click={addTask}>📝 Add</button>
-  <button on:click={saveTasks}>💾 Save</button>
-  <button on:click={() => (showLabel = true)}>📡 Load</button>
+  <button class="button" on:click={addTask}>📝 Add</button>
+  <button class="button" on:click={saveTasks}>💾 Save</button>
+  <button class="button" on:click={() => (showLabel = true)}>📡 Load</button>
 
   {#if showLabel}
     <label>
@@ -34,12 +40,16 @@
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
-      <button
-        on:click={() => {
-          loadTasks()
-          showLabel = false
-        }}>Confirm</button
-      >
+      {#if answer === "yes"}
+        <button
+          on:click={() => {
+            loadTasks()
+            showLabel = false
+          }}>Confirm</button
+        >
+      {:else}
+        <p>Tasks not loaded</p>
+      {/if}
     </label>
   {/if}
 
@@ -66,11 +76,6 @@
   }
 
   input {
-    padding: 0.5rem;
-  }
-
-  button {
-    border: #000 solid 1px;
     padding: 0.5rem;
   }
 </style>
